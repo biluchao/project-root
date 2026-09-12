@@ -1,0 +1,131 @@
+# ==============================================================================
+# conanfile.txt
+# 项目：量化交易系统
+# 包管理器：Conan 2.x
+# 版本：1.0.0
+# ==============================================================================
+
+[requires]
+# ---- 核心依赖（版本锁定，生产环境禁止使用版本范围） ----
+# 版本范围会导致不同机器解析出不同版本，ABI 不兼容导致运行时崩溃
+# 生产环境必须使用固定版本，并通过 lockfile 锁定
+
+# 网络与异步 I/O
+boost/1.83.0
+
+# 日志
+spdlog/1.13.0
+
+# JSON 解析
+nlohmann_json/3.11.3
+
+# 线性代数（SIMD 优化）
+eigen/3.4.0
+
+# 数据库客户端
+libpqxx/7.8.1
+hiredis/1.2.0
+
+# 加密与 TLS
+openssl/3.2.0
+
+# AI 推理（与 cmake/FindONNXRuntime.cmake 二选一）
+# onnxruntime/1.20.0
+
+# 可选：SIMD JSON 解析（高性能场景）
+# simdjson/3.6.0
+
+# 可选：无锁队列（header-only，如项目内已自带则无需）
+# concurrentqueue/1.0.4
+
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+
+[layout]
+cmake_layout
+
+
+[options]
+# ---- Boost：仅编译必要组件，禁用不需要的以缩减体积和构建时间 ----
+boost/*:shared=False
+boost/*:header_only=False
+boost/*:without_atomic=True
+boost/*:without_chrono=False
+boost/*:without_container=False
+boost/*:without_context=True
+boost/*:without_contract=True
+boost/*:without_coroutine=True
+boost/*:without_date_time=True
+boost/*:without_exception=True
+boost/*:without_fiber=True
+boost/*:without_filesystem=False
+boost/*:without_graph=True
+boost/*:without_graph_parallel=True
+boost/*:without_iostreams=True
+boost/*:without_json=True
+boost/*:without_locale=True
+boost/*:without_log=True
+boost/*:without_math=True
+boost/*:without_mpi=True
+boost/*:without_nowide=True
+boost/*:without_program_options=True
+boost/*:without_python=True
+boost/*:without_random=True
+boost/*:without_regex=True
+boost/*:without_serialization=True
+boost/*:without_stacktrace=True
+boost/*:without_system=False
+boost/*:without_test=True
+boost/*:without_thread=False
+boost/*:without_timer=True
+boost/*:without_type_erasure=True
+boost/*:without_wave=True
+
+# ---- OpenSSL：动态库（安全更新可独立替换） ----
+openssl/*:shared=True
+
+# ---- spdlog：header-only 或静态编译 ----
+spdlog/*:shared=False
+spdlog/*:header_only=False
+# 禁用不必要的格式化支持，减少二进制体积
+spdlog/*:no_exceptions=False
+
+# ---- libpqxx：动态链接系统 libpq ----
+libpqxx/*:shared=False
+
+
+[conf]
+# ---- 工具链配置 ----
+# 强制使用 CMake 作为构建系统
+tools.cmake.cmaketoolchain:generator=Ninja
+
+# 编译器标准
+tools.build:cxxflags=["-std=c++20"]
+tools.build:cflags=["-std=c11"]
+
+# 并行构建
+tools.build:jobs=8
+
+# ---- 依赖源码下载超时（生产环境网络不稳定时避免失败） ----
+tools.files.download:retry=3
+tools.files.download:retry_wait=5
+
+# ---- 构建时禁用测试和文档，加快依赖编译 ----
+tools.build:skip_test=True
+tools.build:download_source=False
+
+# ---- CMakeDeps 生成配置 ----
+tools.cmake.cmakedeps:new=True
+
+# ---- 交叉编译时设置（如部署到不同架构） ----
+# tools.cmake.cmaketoolchain:system_name=Linux
+# tools.cmake.cmaketoolchain:system_processor=x86_64
+
+
+[build_requires]
+# 构建工具（仅在构建依赖时使用，不传播到最终包）
+cmake/3.28.3
+ninja/1.11.1
