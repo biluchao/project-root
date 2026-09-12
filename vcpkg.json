@@ -1,0 +1,176 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "trading-system",
+  "version": "1.0.0",
+  "description": "Production-grade quantitative trading system",
+  "homepage": "https://github.com/your-org/trading-system",
+  "license": "MIT",
+  "builtin-baseline": "a42af01b72c28a8e1d7b48107b33e4f286a55ef6",
+  "dependencies": [
+    {
+      "name": "boost-asio",
+      "version>=": "1.83.0"
+    },
+    {
+      "name": "boost-beast",
+      "version>=": "1.83.0"
+    },
+    {
+      "name": "boost-system",
+      "version>=": "1.83.0"
+    },
+    {
+      "name": "boost-thread",
+      "version>=": "1.83.0"
+    },
+    {
+      "name": "boost-filesystem",
+      "version>=": "1.83.0"
+    },
+    {
+      "name": "boost-chrono",
+      "version>=": "1.83.0"
+    },
+    {
+      "name": "boost-container",
+      "version>=": "1.83.0"
+    },
+    {
+      "name": "spdlog",
+      "version>=": "1.13.0",
+      "features": [
+        "fmt-external"
+      ]
+    },
+    {
+      "name": "nlohmann-json",
+      "version>=": "3.11.3"
+    },
+    {
+      "name": "eigen3",
+      "version>=": "3.4.0"
+    },
+    {
+      "name": "openssl",
+      "version>=": "3.2.0",
+      "default-features": false,
+      "features": [
+        "ssl"
+      ]
+    },
+    {
+      "name": "libpqxx",
+      "version>=": "7.8.1",
+      "platform": "!windows"
+    },
+    {
+      "name": "hiredis",
+      "version>=": "1.2.0",
+      "platform": "!windows"
+    },
+    {
+      "name": "concurrentqueue",
+      "version>=": "1.0.4"
+    },
+    {
+      "name": "simdjson",
+      "version>=": "3.6.0"
+    }
+  ],
+  "overrides": [
+    {
+      "name": "boost-asio",
+      "version": "1.83.0"
+    },
+    {
+      "name": "boost-beast",
+      "version": "1.83.0"
+    },
+    {
+      "name": "boost-system",
+      "version": "1.83.0"
+    },
+    {
+      "name": "boost-thread",
+      "version": "1.83.0"
+    },
+    {
+      "name": "boost-filesystem",
+      "version": "1.83.0"
+    },
+    {
+      "name": "boost-chrono",
+      "version": "1.83.0"
+    },
+    {
+      "name": "boost-container",
+      "version": "1.83.0"
+    },
+    {
+      "name": "spdlog",
+      "version": "1.13.0"
+    },
+    {
+      "name": "nlohmann-json",
+      "version": "3.11.3"
+    },
+    {
+      "name": "eigen3",
+      "version": "3.4.0"
+    },
+    {
+      "name": "openssl",
+      "version": "3.2.0"
+    },
+    {
+      "name": "libpqxx",
+      "version": "7.8.1"
+    },
+    {
+      "name": "hiredis",
+      "version": "1.2.0"
+    },
+    {
+      "name": "concurrentqueue",
+      "version": "1.0.4"
+    },
+    {
+      "name": "simdjson",
+      "version": "3.6.0"
+    }
+  ],
+  "features": {
+    "backtest": {
+      "description": "回测与仿真模块依赖",
+      "dependencies": [
+        {
+          "name": "benchmark",
+          "version>=": "1.8.3"
+        }
+      ]
+    },
+    "tests": {
+      "description": "单元测试与集成测试依赖",
+      "dependencies": [
+        {
+          "name": "gtest",
+          "version>=": "1.14.0"
+        }
+      ]
+    },
+    "cuda": {
+      "description": "GPU 推理支持（需 NVIDIA CUDA 环境）",
+      "dependencies": [
+        {
+          "name": "cuda",
+          "version>=": "12.3.0",
+          "platform": "linux"
+        }
+      ]
+    }
+  },
+  "default-features": [
+    "backtest"
+  ],
+  "supports": "!(uwp | android)"
+}
