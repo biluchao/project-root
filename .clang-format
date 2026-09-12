@@ -1,0 +1,168 @@
+# ==============================================================================
+# .clang-format
+# 项目：量化交易系统
+# 风格：基于 Google C++ Style，针对金融/交易场景优化
+# 版本：1.0.0
+# ==============================================================================
+
+---
+Language: Cpp
+BasedOnStyle: Google
+
+# ------------------------------------------------------------------------------
+# 基础排版
+# ------------------------------------------------------------------------------
+Standard: c++20
+ColumnLimit: 100
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+AccessModifierOffset: -4
+
+# ------------------------------------------------------------------------------
+# 对齐规则
+# ------------------------------------------------------------------------------
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: false
+AlignConsecutiveMacros: true
+AlignEscapedNewlines: Left
+AlignOperands: AlignAfterOperator
+AlignTrailingComments: true
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: InlineOnly
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+
+# ------------------------------------------------------------------------------
+# 括号与换行
+# ------------------------------------------------------------------------------
+BreakBeforeBraces: Attach
+BraceWrapping:
+  AfterCaseLabel: false
+  AfterClass: false
+  AfterControlStatement: Never
+  AfterEnum: false
+  AfterFunction: false
+  AfterNamespace: false
+  AfterStruct: false
+  AfterUnion: false
+  BeforeCatch: false
+  BeforeElse: false
+  IndentBraces: false
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+
+BreakBeforeBinaryOperators: None
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializers: BeforeComma
+BreakInheritanceList: BeforeComma
+BreakStringLiterals: true
+BinPackArguments: false
+BinPackParameters: false
+
+# ------------------------------------------------------------------------------
+# 指针与引用（左对齐，符合 Google 风格）
+# ------------------------------------------------------------------------------
+PointerAlignment: Left
+ReferenceAlignment: Left
+DerivePointerAlignment: false
+
+# ------------------------------------------------------------------------------
+# 空行控制
+# ------------------------------------------------------------------------------
+MaxEmptyLinesToKeep: 1
+EmptyLineBeforeAccessModifier: Always
+EmptyLineAfterAccessModifier: Never
+KeepEmptyLinesAtTheStartOfBlocks: false
+
+# ------------------------------------------------------------------------------
+# 命名空间与缩进
+# ------------------------------------------------------------------------------
+NamespaceIndentation: None
+IndentCaseLabels: true
+IndentCaseBlocks: false
+IndentGotoLabels: false
+IndentPPDirectives: BeforeHash
+IndentWrappedFunctionNames: false
+IndentRequires: false
+IndentAccessModifiers: false
+
+# ------------------------------------------------------------------------------
+# 构造函数与初始化列表
+# ------------------------------------------------------------------------------
+ConstructorInitializerIndentWidth: 4
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+PackConstructorInitializers: Never
+
+# ------------------------------------------------------------------------------
+# 注释
+# ------------------------------------------------------------------------------
+SpacesBeforeTrailingComments: 2
+ReflowComments: true
+
+# ------------------------------------------------------------------------------
+# 头文件排序（启用后由 clang-format 统一管理）
+# 修复：头文件顺序混乱导致编译依赖问题
+# ------------------------------------------------------------------------------
+SortIncludes: CaseSensitive
+IncludeBlocks: Regroup
+IncludeCategories:
+  # 1. 主头文件（对应 .cpp 的同名 .hpp）
+  - Regex: '^"(.+\.hpp)"$'
+    Priority: 1
+  # 2. 项目内部头文件（src/ 下的相对路径）
+  - Regex: '^"((src|include)/.*)"$'
+    Priority: 2
+  # 3. 项目公共头文件
+  - Regex: '^"((common|event|data|indicator|strategy|ai|oms|virtual_broker|experience|portfolio|backtest|compliance|backend)/.*)"$'
+    Priority: 3
+  # 4. C 系统头文件
+  - Regex: '^<[a-z_]+\.h>$'
+    Priority: 4
+  # 5. C++ 标准库
+  - Regex: '^<[a-z_]+>$'
+    Priority: 5
+  # 6. 第三方库（Boost、spdlog 等）
+  - Regex: '^<(boost|spdlog|nlohmann|Eigen|onnxruntime|pqxx|hiredis|openssl|simdjson)/.*>$'
+    Priority: 6
+  # 7. 其他
+  - Regex: '.*'
+    Priority: 7
+
+# ------------------------------------------------------------------------------
+# 宏与预处理器
+# ------------------------------------------------------------------------------
+AlignArrayOfStructures: Right
+SpaceAfterTemplateKeyword: true
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyParentheses: false
+SpacesInAngles: false
+SpacesInCStyleCastParentheses: false
+SpacesInContainerLiterals: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+
+# ------------------------------------------------------------------------------
+# 模板与泛型
+# ------------------------------------------------------------------------------
+AlwaysBreakTemplateDeclarations: Yes
+AllowAllTemplateArgumentOnNextLine: false
+AllowAllConstructorInitializersOnNextLine: false
+PenaltyBreakTemplateDeclaration: 10
+
+# ------------------------------------------------------------------------------
+# 其他
+# ------------------------------------------------------------------------------
+FixNamespaceComments: true
+SortUsingDeclarations: true
+StatementMacros:
+  - Q_UNUSED
+  - QT_REQUIRE_VERSION
+  - BOOST_ASIO_DISABLE_CONCEPTS
+  - SPDLOG_ACTIVE_LEVEL
